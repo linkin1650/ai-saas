@@ -26,11 +26,15 @@ export async function getUserById(userId: string) {
 
     const user = await User.findOne({ clerkId: userId });
 
-    if (!user) throw new Error("User not found");
+    if (!user) {
+      console.warn("User not found:", userId); // 記錄警告信息
+      return null; // 返回 null 而不是拋出錯誤
+    }
 
     return JSON.parse(JSON.stringify(user));
   } catch (error) {
-    handleError(error);
+    console.error("Database connection error:", error); // 詳細記錄錯誤
+    return null; // 返回 null，避免應用崩潰
   }
 }
 
