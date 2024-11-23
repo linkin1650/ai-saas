@@ -49,14 +49,14 @@ export async function updateImage({ image, userId, path }: UpdateImageParams) {
       throw new Error("Unauthorized or image not found");
     }
 
-    const updateImage = await Image.findByIdAndUpdate(
+    const updatedImage = await Image.findByIdAndUpdate(
       imageToUpdate._id,
       image,
       { new: true }
     );
 
     revalidatePath(path);
-    return JSON.parse(JSON.stringify(image));
+    return JSON.parse(JSON.stringify(updatedImage));
   } catch (error) {
     handleError(error);
   }
