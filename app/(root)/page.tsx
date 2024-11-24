@@ -6,8 +6,9 @@ import Link from "next/link";
 import React from "react";
 
 const Home = async ({ searchParams }: SearchParamProps) => {
-  const param = await searchParams
-  const page = Number( param?.page) || 1;
+  const param =
+    searchParams instanceof Promise ? await searchParams : searchParams;
+  const page = Number(param?.page) || 1;
   const searchQuery = (param?.query as string) || "";
 
   const images = await getAllImage({ page, searchQuery });
